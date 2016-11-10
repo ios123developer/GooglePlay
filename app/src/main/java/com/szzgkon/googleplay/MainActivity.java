@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,56 +16,52 @@ import android.widget.Toast;
 
 import com.szzgkon.googleplay.fragment.AppFragment;
 import com.szzgkon.googleplay.fragment.HomeFragment;
+import com.szzgkon.googleplay.tools.UIUtils;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
     private ViewPager mViewPager;
-    private FragmentManager fm;
+    private PagerTabStrip pager_tab_strip;
+    private String[] tab_names;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+     init();
+     initView();
+     initActionBar();
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
+    @Override
+    public void initView() {
         setContentView(R.layout.activity_main);
 
         mViewPager = (ViewPager)findViewById(R.id.vp);
-
-
+        tab_names = UIUtils.getStringArray(R.array.tab_names);
 
 
         mViewPager.setAdapter(new MainAdapter(getSupportFragmentManager()));
 
+        pager_tab_strip = (PagerTabStrip)findViewById(R.id.pager_tab_strip);
 
+        pager_tab_strip.setTabIndicatorColor(getResources().getColor(R.color.indicatorColor));
+
+
+    }
+
+    @Override
+    public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
 
 
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setIcon(R.mipmap.ic_launcher);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        ActionBar.Tab tab1 = actionBar.newTab().setText("标签1").setTabListener(new MyTabListener());
-        actionBar.addTab(tab1);
-        ActionBar.Tab tab2 = actionBar.newTab().setText("标签2").setTabListener(new MyTabListener());
-        actionBar.addTab(tab2);
-        ActionBar.Tab tab3 = actionBar.newTab().setText("标签3").setTabListener(new MyTabListener());
-        actionBar.addTab(tab3);
-        ActionBar.Tab tab4 = actionBar.newTab().setText("标签4").setTabListener(new MyTabListener());
-        actionBar.addTab(tab4);
-
-
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-            /**
-             * 当页面发生变化的时候调用
-             * @param position
-             */
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                getSupportActionBar().setSelectedNavigationItem(position);
-
-            }
-        });
-
-
     }
 
     private class MainAdapter extends FragmentStatePagerAdapter{
@@ -96,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
          */
         @Override
         public int getCount() {
-            return 4;
+            return tab_names.length;
         }
 
         /**
@@ -106,32 +101,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            return "标签" + position;
+            return tab_names[position];
         }
     }
 
-    private class MyTabListener implements ActionBar.TabListener {
-
-        /**
-         * 当tab标签被选中的时候viewpager切换到指定位置
-         * @param tab
-         * @param ft
-         */
-        @Override
-        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-            mViewPager.setCurrentItem(tab.getPosition());
-
-        }
-
-        @Override
-        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-        }
-
-        @Override
-        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-        }
-    }
 
 
     /**
@@ -202,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
         startActivity(intent);
     }
+
 
 
 }
