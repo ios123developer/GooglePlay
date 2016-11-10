@@ -29,7 +29,9 @@ import java.util.List;
 
 public abstract class BaseActivity extends AppCompatActivity {
     //在基类中可以管理所有的activity
-    List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
+  public final static   List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
+
+
 
     /**
      * LinkedList和ArrayList的区别
@@ -82,6 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract   void init();
     protected  abstract void initView();
     protected abstract void initActionBar();
+
 
 
 }

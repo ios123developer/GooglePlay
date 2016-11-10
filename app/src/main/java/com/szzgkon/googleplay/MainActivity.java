@@ -14,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.szzgkon.googleplay.fragment.AppFragment;
-import com.szzgkon.googleplay.fragment.HomeFragment;
 import com.szzgkon.googleplay.tools.UIUtils;
 
 public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
@@ -52,7 +50,6 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
         pager_tab_strip.setTabIndicatorColor(getResources().getColor(R.color.indicatorColor));
 
-
     }
 
     @Override
@@ -78,11 +75,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
          */
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
-                return new HomeFragment();
-            } else {
-                return new AppFragment();
-            }
+          return FragmentFactory.creatFragment(position);
         }
 
         /**
