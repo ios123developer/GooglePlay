@@ -3,6 +3,7 @@ package com.szzgkon.googleplay;
 import android.support.v4.app.Fragment;
 
 import com.szzgkon.googleplay.fragment.AppFragment;
+import com.szzgkon.googleplay.fragment.BaseFragment;
 import com.szzgkon.googleplay.fragment.GameFragment;
 import com.szzgkon.googleplay.fragment.HomeFragment;
 import com.szzgkon.googleplay.fragment.SubjectFragment;
@@ -31,11 +32,11 @@ import java.util.Map;
 
 public class FragmentFactory {
 
-    private static Map<Integer,Fragment> mFragments = new HashMap<Integer, Fragment>();
+    private static Map<Integer,BaseFragment> mFragments = new HashMap<Integer, BaseFragment>();
 
     public static Fragment creatFragment(int position){
 
-        Fragment fragment = null;
+        BaseFragment fragment = null;
 
         fragment = mFragments.get(position);
 

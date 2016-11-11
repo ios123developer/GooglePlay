@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
         mViewPager.setAdapter(new MainAdapter(getSupportFragmentManager()));
 
+
         pager_tab_strip = (PagerTabStrip)findViewById(R.id.pager_tab_strip);
 
         pager_tab_strip.setTabIndicatorColor(getResources().getColor(R.color.indicatorColor));
