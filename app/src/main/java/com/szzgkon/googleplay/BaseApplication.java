@@ -1,6 +1,8 @@
 package com.szzgkon.googleplay;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Process;
 
 
 /**
@@ -25,14 +27,30 @@ import android.app.Application;
 public class BaseApplication extends Application {
 
    private static BaseApplication application;
+    private static int mainTid;
 
+    private static Handler handler;
     @Override
     public void onCreate() {
         super.onCreate();
         application = this;
+
+        //必然是在主线程运行的
+
+        mainTid = Process.myTid();
+
+        handler = new Handler();
     }
 
     public static BaseApplication getApplication() {
         return application;
+    }
+
+    public static int getMainTid() {
+        return mainTid;
+    }
+
+    public static Handler getHandler() {
+        return handler;
     }
 }

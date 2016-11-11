@@ -1,6 +1,8 @@
 package com.szzgkon.googleplay.tools;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.os.Process;
 
 import com.szzgkon.googleplay.BaseApplication;
 
@@ -39,6 +41,10 @@ public class UIUtils {
         return BaseApplication.getApplication().getResources();
     }
 
+    public static Context getContext(){
+        return BaseApplication.getApplication();
+    }
+
     /* dip 转 px */
 
     public static int dip2px(int dip){
@@ -51,6 +57,19 @@ public class UIUtils {
     public static int px2dip(int px){
         final float scale  = getResource().getDisplayMetrics().density;
         return (int)(px / scale + 0.5f);
+    }
+
+    /**
+     * 把runable方法提交到主线程运行
+     * @param runable
+     */
+    public static void runOnUiThread(Runnable runable){
+        if(Process.myTid() == BaseApplication.getMainTid()){
+            runable.run();
+
+        }else {
+            BaseApplication.getHandler().post(runable);
+        }
     }
 
 }

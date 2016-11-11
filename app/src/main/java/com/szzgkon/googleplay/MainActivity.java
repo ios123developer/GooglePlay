@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.szzgkon.googleplay.fragment.BaseFragment;
 import com.szzgkon.googleplay.tools.UIUtils;
 
 public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
@@ -45,7 +46,15 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
 
         mViewPager.setAdapter(new MainAdapter(getSupportFragmentManager()));
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
 
+                BaseFragment creatFragment = FragmentFactory.creatFragment(position);
+                creatFragment.show();
+            }
+        });
 
         pager_tab_strip = (PagerTabStrip)findViewById(R.id.pager_tab_strip);
 

@@ -4,6 +4,8 @@ package com.szzgkon.googleplay.fragment;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.szzgkon.googleplay.view.LoadingPage;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -11,8 +13,8 @@ public class GameFragment extends BaseFragment {
 
 
     @Override
-    public LoadResult load() {
-        return LoadResult.error;
+    public LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.error;
     }
 
     @Override

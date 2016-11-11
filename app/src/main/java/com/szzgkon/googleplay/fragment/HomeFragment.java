@@ -1,9 +1,13 @@
 package com.szzgkon.googleplay.fragment;
 
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
+
+import com.szzgkon.googleplay.view.LoadingPage;
 
 
 /**
@@ -13,10 +17,11 @@ public class HomeFragment extends BaseFragment {
 
 
 
-    public HomeFragment() {
-        // Required empty public constructor
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+       show();
     }
-
 
     public View creatSuccessView() {
         TextView tv = new TextView(getActivity());
@@ -26,15 +31,9 @@ public class HomeFragment extends BaseFragment {
         return tv;
     }
 
-    public LoadResult load() {
-        return LoadResult.success;
+    public LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.success;
     }
-
-
-
-
-
-
 
 
 }
