@@ -30,7 +30,9 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
      initView();
      initActionBar();
 
+
     }
+
 
     @Override
     protected void init() {

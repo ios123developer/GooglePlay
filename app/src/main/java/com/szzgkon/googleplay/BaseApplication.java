@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Process;
 
+import org.xutils.*;
+
 
 /**
  * ===================================================
@@ -40,6 +42,11 @@ public class BaseApplication extends Application {
         mainTid = Process.myTid();
 
         handler = new Handler();
+
+        x.Ext.init(this);
+
+        x.Ext.setDebug(BuildConfig.DEBUG);
+
     }
 
     public static BaseApplication getApplication() {

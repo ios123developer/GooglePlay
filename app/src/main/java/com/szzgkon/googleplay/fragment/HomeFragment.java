@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.szzgkon.googleplay.protocol.HomeProtocol;
 import com.szzgkon.googleplay.view.LoadingPage;
 
 
@@ -32,8 +33,13 @@ public class HomeFragment extends BaseFragment {
     }
 
     public LoadingPage.LoadResult load() {
+
+        HomeProtocol protocol = new HomeProtocol();
+        protocol.load(0);
         return LoadingPage.LoadResult.success;
     }
+
+
 
 
 }
