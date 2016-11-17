@@ -11,13 +11,14 @@ import com.szzgkon.googleplay.view.LoadingPage;
  */
 public class CategoryFragment extends BaseFragment {
 
+
     @Override
-    public LoadingPage.LoadResult load() {
-        return LoadingPage.LoadResult.error;
+    public View createSuccessView() {
+        return null;
     }
 
     @Override
-    public View creatSuccessView() {
-        return null;
+    protected LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.error;
     }
 }

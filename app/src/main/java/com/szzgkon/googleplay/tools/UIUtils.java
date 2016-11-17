@@ -3,6 +3,7 @@ package com.szzgkon.googleplay.tools;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Process;
+import android.view.View;
 
 import com.szzgkon.googleplay.BaseApplication;
 
@@ -72,5 +73,8 @@ public class UIUtils {
         }
     }
 
+    public static View inflate(int id) {
+        return View.inflate(getContext(),id,null);
+    }
 }
 

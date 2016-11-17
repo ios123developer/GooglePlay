@@ -1,10 +1,14 @@
 package com.szzgkon.googleplay;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -26,7 +30,17 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     init();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+
+        }
+
+
+
+        init();
      initView();
      initActionBar();
 
@@ -48,15 +62,27 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
 
         mViewPager.setAdapter(new MainAdapter(getSupportFragmentManager()));
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
             @Override
             public void onPageSelected(int position) {
-                super.onPageSelected(position);
-
                 BaseFragment creatFragment = FragmentFactory.creatFragment(position);
+
+                System.out.println(creatFragment.toString());
                 creatFragment.show();
             }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
         });
+
 
         pager_tab_strip = (PagerTabStrip)findViewById(R.id.pager_tab_strip);
 

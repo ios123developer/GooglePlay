@@ -11,13 +11,15 @@ import com.szzgkon.googleplay.view.LoadingPage;
  */
 public class TopFragment extends BaseFragment {
 
+
+
     @Override
     public LoadingPage.LoadResult load() {
         return LoadingPage.LoadResult.error;
     }
 
     @Override
-    public View creatSuccessView() {
+    public View createSuccessView() {
         return null;
     }
 }

@@ -18,7 +18,7 @@ public class GameFragment extends BaseFragment {
     }
 
     @Override
-    public View creatSuccessView() {
+    public View createSuccessView() {
         return null;
     }
 }

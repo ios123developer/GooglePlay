@@ -56,7 +56,7 @@ public class ImageOptions {
     private boolean useMemCache = true;
     private ParamsBuilder paramsBuilder;
 
-    protected ImageOptions() {
+    public ImageOptions() {
     }
 
     /*package*/

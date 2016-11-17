@@ -25,24 +25,33 @@ import java.io.File;
 
 public  class FileUtils {
     public static final String CACHE = "cache";
+    public static final String ICON = "cache";
 
     public static final String ROOT = "GooglePlay";
+
+    /**
+     * 获取图片的缓存的路径
+     * @return
+     */
+    public static File getIconDir(){
+        return getDir(ICON);
+
+    }
+
+
+
     public static File getDir(String str){
        StringBuilder path = new StringBuilder();
 
-        if(isSDAvaliable()){
-            path.append(Environment.getExternalStorageDirectory().getAbsolutePath());
+            path.append("mnt");
+            path.append(File.separator);//添加'/'
+            path.append("sdcard");
             path.append(File.separator);//添加'/'
             path.append(ROOT);// /mnt/sdcard/GooglePlay/cache
             path.append(File.separator);
             path.append(str);
-        }else {
-            File fileDir = UIUtils.getContext().getCacheDir();
-            path.append(fileDir.getAbsolutePath());//data/data/com.szzgkon.googleplay/cache
-            path.append(File.separator);
-            path.append(str);
-        }
 
+//
 
         File file = new File(path.toString());
 
