@@ -39,7 +39,6 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
         }
 
 
-
         init();
      initView();
      initActionBar();
@@ -50,6 +49,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
     @Override
     protected void init() {
+        tab_names = UIUtils.getStringArray(R.array.tab_names);
 
     }
 
@@ -61,26 +61,17 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
         tab_names = UIUtils.getStringArray(R.array.tab_names);
 
 
-        mViewPager.setAdapter(new MainAdapter(getSupportFragmentManager()));
 
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
+        mViewPager.setAdapter(new MainAdpater(getSupportFragmentManager()));
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
 
             @Override
             public void onPageSelected(int position) {
-                BaseFragment creatFragment = FragmentFactory.creatFragment(position);
-
-                System.out.println(creatFragment.toString());
-                creatFragment.show();
+                super.onPageSelected(position);
+                BaseFragment createFragment = FragmentFactory.createFragment(position);
+                createFragment.show();//  当切换界面的时候 重新请求服务器
             }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
         });
 
 
@@ -99,41 +90,28 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
         actionBar.setIcon(R.mipmap.ic_launcher);
     }
 
-    private class MainAdapter extends FragmentStatePagerAdapter{
-
-
-        public MainAdapter(FragmentManager fm) {
+    private class MainAdpater extends FragmentStatePagerAdapter{
+        public MainAdpater(FragmentManager fm) {
             super(fm);
         }
-
-        /**
-         * 每个条目返回的fragment
-         * @param position
-         * @return
-         */
+        // 每个条目返回的fragment
+        //  0
         @Override
         public Fragment getItem(int position) {
-          return FragmentFactory.creatFragment(position);
+            //  通过Fragment工厂  生产Fragment
+            return FragmentFactory.createFragment(position);
         }
-
-        /**
-         * 一共几个条目
-         * @return
-         */
+        // 一共有几个条目
         @Override
         public int getCount() {
             return tab_names.length;
         }
-
-        /**
-         * 返回每个条目的标题
-         * @param position
-         * @return
-         */
+        // 返回每个条目的标题
         @Override
         public CharSequence getPageTitle(int position) {
             return tab_names[position];
         }
+
     }
 
 
