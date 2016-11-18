@@ -2,6 +2,7 @@ package com.szzgkon.googleplay.tools;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Process;
 import android.view.View;
 
@@ -75,6 +76,10 @@ public class UIUtils {
 
     public static View inflate(int id) {
         return View.inflate(getContext(),id,null);
+    }
+
+    public static Drawable getDrawalbe(int id) {
+        return getResource().getDrawable(id);
     }
 }
 

@@ -18,6 +18,8 @@ public abstract class BaseFragment extends Fragment {
 
     private LoadingPage loadingPage;
     protected BitmapUtils bitmapUtils;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

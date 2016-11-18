@@ -2,17 +2,17 @@ package com.szzgkon.googleplay.fragment;
 
 
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.szzgkon.googleplay.R;
+import com.szzgkon.googleplay.adapter.DefaultAdapter;
 import com.szzgkon.googleplay.domain.SubjectInfo;
+import com.szzgkon.googleplay.holder.BaseHolder;
 import com.szzgkon.googleplay.http.HttpHelper;
 import com.szzgkon.googleplay.protocol.SubjectProtocol;
 import com.szzgkon.googleplay.tools.UIUtils;
+import com.szzgkon.googleplay.view.BaseListView;
 import com.szzgkon.googleplay.view.LoadingPage;
 
 import java.util.List;
@@ -41,52 +41,47 @@ public class SubjectFragment extends BaseFragment {
 
     @Override
     public View createSuccessView() {
-        ListView listView = new ListView(UIUtils.getContext());
-        listView.setAdapter(new SubjectAdapter());
+        BaseListView listView = new BaseListView(UIUtils.getContext());
+        listView.setAdapter(new SubjectAdapter(datas));
         return listView;
     }
-    private class SubjectAdapter extends BaseAdapter {
+    private class SubjectAdapter extends DefaultAdapter<SubjectInfo> {
 
-        @Override
-        public int getCount() {
-            return datas.size();
+        public SubjectAdapter(List<SubjectInfo> datas) {
+            super(datas);
         }
 
         @Override
-        public Object getItem(int position) {
-            return datas.get(position);
+        protected BaseHolder<SubjectInfo> getHolder() {
+            return new SubjectHolder();
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            if(convertView!=null){
-
-                holder=(ViewHolder) convertView.getTag();
-
-            }else{
-                convertView = UIUtils.inflate(R.layout.item_subject);
-                holder=new ViewHolder();
-                holder.item_icon=(ImageView) convertView.findViewById(R.id.item_icon);
-                holder.item_txt=(TextView) convertView.findViewById(R.id.item_txt);
-                convertView.setTag(holder);
-            }
-            SubjectInfo info=datas.get(position);
-            holder.item_txt.setText(info.getDes());
-            bitmapUtils.display(holder.item_icon, HttpHelper.URL+"image?name="+info.getUrl());
-            return convertView;
-        }
 
     }
-    class ViewHolder{
+   static class SubjectHolder extends BaseHolder<SubjectInfo> {
         ImageView item_icon;
         TextView item_txt;
-    }
+
+
+       @Override
+       public View initView() {
+          View contentView = UIUtils.inflate(R.layout.item_subject);
+
+           this.item_icon=(ImageView) contentView.findViewById(R.id.item_icon);
+           this.item_txt=(TextView) contentView.findViewById(R.id.item_txt);
+
+           return contentView;
+       }
+
+
+
+       @Override
+       public void refreshView(SubjectInfo data) {
+           this.item_txt.setText(data.getDes());
+           bitmapUtils.display(this.item_icon, HttpHelper.URL+"image?name="+data.getUrl());
+       }
+
+   }
 
     @Override
     protected LoadingPage.LoadResult load() {
