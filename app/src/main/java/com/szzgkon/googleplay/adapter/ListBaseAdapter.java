@@ -25,7 +25,7 @@ import java.util.List;
  **/
 
 
-public class ListBaseAdapter extends DefaultAdapter<AppInfo> {
+public abstract class ListBaseAdapter extends DefaultAdapter<AppInfo> {
 
     public ListBaseAdapter(List<AppInfo> datas) {
         super(datas);
@@ -36,4 +36,7 @@ public class ListBaseAdapter extends DefaultAdapter<AppInfo> {
 
         return new ListBaseHolder();
     }
+
+    @Override
+    protected abstract List<AppInfo> onload();
 }

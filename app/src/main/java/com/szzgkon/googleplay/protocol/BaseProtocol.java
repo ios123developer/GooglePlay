@@ -1,5 +1,7 @@
 package com.szzgkon.googleplay.protocol;
 
+import android.os.SystemClock;
+
 import com.lidroid.xutils.util.IOUtils;
 import com.szzgkon.googleplay.http.HttpHelper;
 import com.szzgkon.googleplay.tools.FileUtils;
@@ -32,6 +34,8 @@ import java.io.StringWriter;
 
 public abstract class BaseProtocol<T> {
     public T load(int index) {
+        SystemClock.sleep(1000);
+
         // 加载本地数据
         String json = loadLocal(index);
         if (json == null) {

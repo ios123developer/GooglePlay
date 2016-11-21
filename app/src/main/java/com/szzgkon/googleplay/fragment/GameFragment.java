@@ -23,7 +23,15 @@ public class GameFragment extends BaseFragment {
     @Override
     public View createSuccessView() {
         BaseListView listView = new BaseListView(UIUtils.getContext());
-        listView.setAdapter(new ListBaseAdapter(datas));;
+        listView.setAdapter(new ListBaseAdapter(datas) {
+            @Override
+            protected List<AppInfo> onload() {
+                GameProtocol protocol = new GameProtocol();
+                List<AppInfo> newData = protocol.load(datas.size());
+                datas.addAll(newData);
+                return newData;
+            }
+        });;
         return listView;
     }
 
