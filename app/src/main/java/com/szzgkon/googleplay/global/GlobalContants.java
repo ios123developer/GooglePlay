@@ -26,4 +26,5 @@ public class GlobalContants {
         public static final String IMAGE_URL = SERVER_URL + "image?name=";
 
 
+
 }

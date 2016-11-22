@@ -16,16 +16,37 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.szzgkon.googleplay.fragment.BaseFragment;
+import com.szzgkon.googleplay.holder.MenuHolder;
 import com.szzgkon.googleplay.tools.UIUtils;
+
+/**
+ * ===================================================
+ *
+ * 版权：深圳市中广控信息科技有限公司 版权所有（c）2016
+ *
+ * 作者：张勇柯
+ *
+ * 版本：1.0
+ *
+ * 创建日期：16/11/21 下午5:01
+ *
+ * 描述：主类
+ *
+ * 修订历史：
+ *
+ * ===================================================
+ **/
 
 public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
     private ViewPager mViewPager;
     private PagerTabStrip pager_tab_strip;
     private String[] tab_names;
+    private FrameLayout fl_menu;//菜单的根布局
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +80,10 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
         mViewPager = (ViewPager)findViewById(R.id.vp);
         tab_names = UIUtils.getStringArray(R.array.tab_names);
+         fl_menu = (FrameLayout) findViewById(R.id.fl_menu);
+        MenuHolder holder = new MenuHolder();
+//        holder.setData();
+        fl_menu.addView(holder.getContentView());
 
 
 

@@ -81,5 +81,27 @@ public class UIUtils {
     public static Drawable getDrawalbe(int id) {
         return getResource().getDrawable(id);
     }
+
+    public static int getDimens(int homePictureHeight) {
+        return (int) getResource().getDimension(homePictureHeight);
+    }
+
+    /**
+     * 延迟执行某个任务
+     * @param run
+     * @param time
+     */
+    public static void postDelayed(Runnable run, int time) {
+        BaseApplication.getHandler().postDelayed(run,time);
+
+    }
+
+    /**
+     * 取消任务
+     * @param run
+     */
+    public static void cancel(Runnable run) {
+        BaseApplication.getHandler().removeCallbacks(run);
+    }
 }
 
