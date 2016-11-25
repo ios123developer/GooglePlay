@@ -44,6 +44,7 @@ public abstract class BaseProtocol<T> {
             if (json != null) {
                 saveLocal(json, index);
             }
+
         }
         if (json != null) {
             return paserJson(json);
@@ -53,8 +54,9 @@ public abstract class BaseProtocol<T> {
     }
 
     private String loadServer(int index) {
+
         HttpHelper.HttpResult httpResult = HttpHelper.get(HttpHelper.URL +getKey()
-                + "?index=" + index);
+                + "?index=" + index + getParams());
         if(httpResult != null){
             String json = httpResult.getString();
             return json;
@@ -62,6 +64,11 @@ public abstract class BaseProtocol<T> {
             return null;
         }
     }
+
+    protected  String getParams(){
+        return "";
+    }
+
     private void saveLocal(String json, int index) {
 
         BufferedWriter bw = null;

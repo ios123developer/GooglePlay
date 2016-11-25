@@ -81,9 +81,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-    protected abstract   void init();
-    protected  abstract void initView();
-    protected abstract void initActionBar();
+    public abstract   void init();
+    public  abstract void initView();
+    public abstract void initActionBar();
+
+
 
 
 

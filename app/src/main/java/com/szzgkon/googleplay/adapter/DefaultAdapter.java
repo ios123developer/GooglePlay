@@ -2,7 +2,9 @@ package com.szzgkon.googleplay.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import com.szzgkon.googleplay.holder.BaseHolder;
 import com.szzgkon.googleplay.holder.MoreHolder;
@@ -31,10 +33,11 @@ import java.util.List;
  **/
 
 
-public abstract class DefaultAdapter<T> extends BaseAdapter {
+public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterView.OnItemClickListener {
     private static final int DEFAULT_ITEM = 0;
     private static final int MORE_ITEM = 1;
 
+    private ListView lv;
 
     protected List<T> datas;
 
@@ -46,8 +49,11 @@ public abstract class DefaultAdapter<T> extends BaseAdapter {
         this.datas = datas;
     }
 
-    public DefaultAdapter(List<T> datas) {
+    public DefaultAdapter(List<T> datas, ListView lv) {
         this.datas = datas;
+        //给listview设置条目点击事件
+        lv.setOnItemClickListener(this);
+        this.lv = lv;
     }
 
     @Override
@@ -130,36 +136,37 @@ public abstract class DefaultAdapter<T> extends BaseAdapter {
         //谷歌官方推荐写法
         BaseHolder holder = null;
 
-        switch(getItemViewType(position)){
-        case MORE_ITEM:
-              if(convertView == null){
-               holder = getMoreHolder();
-              } else {
-                  holder = (BaseHolder) convertView.getTag();
-              }
-             break;
+        switch (getItemViewType(position)) {
+            case MORE_ITEM:
+                if (convertView == null) {
+                    holder = getMoreHolder();
+                } else {
+                    holder = (BaseHolder) convertView.getTag();
+                }
+                break;
 
-        case DEFAULT_ITEM:
-            if(convertView == null){
-             holder = getHolder();
-            }else {
-                holder = (BaseHolder) convertView.getTag();
-            }
-            if(position < datas.size()){
-             holder.setData(datas.get(position));
-            }
-             break;
+            case DEFAULT_ITEM:
+                if (convertView == null) {
+                    holder = getHolder();
+                } else {
+                    holder = (BaseHolder) convertView.getTag();
+                }
+                if (position < datas.size()) {
+                    holder.setData(datas.get(position));
+                }
+                break;
         }
 
         return holder.getContentView();//调用此方法的时候，如果返回的是MoreHolder,此时就要去服务器请求数据
     }
 
     private MoreHolder holder;
+
     private BaseHolder getMoreHolder() {
 
-        if(holder != null){
+        if (holder != null) {
             return holder;
-        }else {
+        } else {
             holder = new MoreHolder(this);
         }
 
@@ -175,19 +182,19 @@ public abstract class DefaultAdapter<T> extends BaseAdapter {
             @Override
             public void run() {
                 //在子线程中加载更多
-               final  List<T> newData = onload();
+                final List<T> newData = onload();
 
                 UIUtils.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(newData == null){
+                        if (newData == null) {
                             //TODO 连接服务器失败
                             holder.setData(MoreHolder.LOAD_ERR);
 
-                        }else if(newData.size() == 0){
+                        } else if (newData.size() == 0) {
                             //TODO 服务器已经没有额外数据了
                             holder.setData(MoreHolder.HAS_NO_MORE);
-                        }else {
+                        } else {
                             //成功了
                             holder.setData(MoreHolder.HAS_MORE);
                             datas.addAll(newData);//将请求回来的数据添加到之前的界面上
@@ -200,7 +207,6 @@ public abstract class DefaultAdapter<T> extends BaseAdapter {
                 });
 
 
-
             }
         });
     }
@@ -208,6 +214,24 @@ public abstract class DefaultAdapter<T> extends BaseAdapter {
     /**
      * 加载更多数据
      * ，交给子类去实现
-     * */
+     */
     protected abstract List<T> onload();
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Toast.makeText(UIUtils.getContext(),"position" +  position,Toast.LENGTH_SHORT).show();
+      position = position - lv.getHeaderViewsCount();//获取到顶部条目的数量,修正每个界面listview的条目的位置
+
+        onInnerItemClick(position);
+
+
+    }
+
+    /**
+     * 修正过之后的position，在这个方法中处理点击事件
+     * @param position
+     */
+    public void onInnerItemClick(int position) {
+
+    }
 }

@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
 
     @Override
-    protected void init() {
+    public void init() {
         tab_names = UIUtils.getStringArray(R.array.tab_names);
 
     }

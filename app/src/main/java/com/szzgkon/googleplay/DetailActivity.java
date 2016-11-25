@@ -1,23 +1,110 @@
 package com.szzgkon.googleplay;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+
+import com.szzgkon.googleplay.domain.AppInfo;
+import com.szzgkon.googleplay.holder.DetailInfoHolder;
+import com.szzgkon.googleplay.protocol.DetailProtocol;
+import com.szzgkon.googleplay.tools.UIUtils;
+import com.szzgkon.googleplay.view.LoadingPage;
 
 public class DetailActivity extends BaseActivity {
 
+    private String packageName;
+    private AppInfo data;
+
+    private FrameLayout bottom_layout,detail_info,detail_safe,detail_des;
+    private HorizontalScrollView detail_screen;
+    private DetailInfoHolder detailInfoHolder;
+
     @Override
-    protected void initView() {
-        setContentView(R.layout.activity_detail);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //获取到打开当前activity的意图对象
+        Intent intent = getIntent();
+
+        packageName = intent.getStringExtra("packageName");//得到详细信息的包名
+        super.onCreate(savedInstanceState);
+
+
+        initView();
+        init();
+        initActionBar();
+    }
+    @Override
+    public void initView() {
+        LoadingPage loadingPage = new LoadingPage(this) {
+            @Override
+            public View createSuccessView() {
+                return DetailActivity.this.createSuccessView();
+            }
+
+            @Override
+            protected LoadResult load() {
+                return DetailActivity.this.load();
+            }
+        };
+        loadingPage.show();//必须调用show方法，才会请求服务器
+        setContentView(loadingPage);
+    }
+
+    /**
+     * 加载成功的界面
+     * @return
+     */
+    private View createSuccessView() {
+        View view = UIUtils.inflate(R.layout.activity_detail);
+
+        bottom_layout = (FrameLayout) view.findViewById(R.id.bottom_layout);
+        //操作应用程序信息
+        detail_info = (FrameLayout) view.findViewById(R.id.detail_info);
+        detailInfoHolder = new DetailInfoHolder();
+        detailInfoHolder.setData(data);
+        View contentView = detailInfoHolder.getContentView();
+        detail_info.addView(contentView);
+
+
+        detail_safe = (FrameLayout) view.findViewById(R.id.detail_safe);
+        detail_des = (FrameLayout) view.findViewById(R.id.detail_des);
+
+        detail_screen = (HorizontalScrollView) view.findViewById(R.id.detail_screen);
+
+
+        return view;
+    }
+
+    /**
+     * 请求服务器加载数据
+     * @return
+     */
+
+    private LoadingPage.LoadResult load() {
+
+        DetailProtocol protocol = new DetailProtocol(packageName);
+
+        data = protocol.load(0);
+        if(data == null){
+             return LoadingPage.LoadResult.error;
+        }else {
+            return LoadingPage.LoadResult.success;
+        }
+
     }
 
     @Override
-    protected void init() {
+    public void init() {
 
     }
 
 
 
     @Override
-    protected void initActionBar() {
+    public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setIcon(R.mipmap.ic_launcher);

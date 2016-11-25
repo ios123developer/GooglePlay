@@ -1,5 +1,7 @@
 package com.szzgkon.googleplay.adapter;
 
+import android.widget.ListView;
+
 import com.szzgkon.googleplay.domain.AppInfo;
 import com.szzgkon.googleplay.holder.BaseHolder;
 import com.szzgkon.googleplay.holder.ListBaseHolder;
@@ -27,8 +29,8 @@ import java.util.List;
 
 public abstract class ListBaseAdapter extends DefaultAdapter<AppInfo> {
 
-    public ListBaseAdapter(List<AppInfo> datas) {
-        super(datas);
+    public ListBaseAdapter(List<AppInfo> datas,ListView lv) {
+        super(datas,lv);
     }
 
     @Override

@@ -157,7 +157,7 @@ public abstract class LoadingPage extends FrameLayout {
 
             @Override
             public void run() {
-                SystemClock.sleep(2000);
+                SystemClock.sleep(1000);
                 final LoadResult result = load();
                 UIUtils.runOnUiThread(new Runnable() {
 

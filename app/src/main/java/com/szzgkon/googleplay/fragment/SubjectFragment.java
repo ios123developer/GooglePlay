@@ -3,6 +3,7 @@ package com.szzgkon.googleplay.fragment;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.szzgkon.googleplay.R;
@@ -42,13 +43,13 @@ public class SubjectFragment extends BaseFragment {
     @Override
     public View createSuccessView() {
         BaseListView listView = new BaseListView(UIUtils.getContext());
-        listView.setAdapter(new SubjectAdapter(datas));
+        listView.setAdapter(new SubjectAdapter(datas,listView));
         return listView;
     }
     private class SubjectAdapter extends DefaultAdapter<SubjectInfo> {
 
-        public SubjectAdapter(List<SubjectInfo> datas) {
-            super(datas);
+        public SubjectAdapter(List<SubjectInfo> datas,ListView lv) {
+            super(datas,lv);
         }
 
         @Override

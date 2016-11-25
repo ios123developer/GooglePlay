@@ -1,11 +1,14 @@
 package com.szzgkon.googleplay.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Toast;
 
+import com.szzgkon.googleplay.DetailActivity;
 import com.szzgkon.googleplay.adapter.ListBaseAdapter;
 import com.szzgkon.googleplay.domain.AppInfo;
 import com.szzgkon.googleplay.holder.HomePictureHolder;
@@ -48,7 +51,7 @@ public class HomeFragment extends BaseFragment {
         listView.addHeaderView(contentView);//把holder里的view对象添加到listview的上面
 
 
-        listView.setAdapter(new ListBaseAdapter(datas) {
+        listView.setAdapter(new ListBaseAdapter(datas,listView) {
             @Override
             protected List<AppInfo> onload() {
 
@@ -56,6 +59,21 @@ public class HomeFragment extends BaseFragment {
                 List<AppInfo> newData = protocol.load(datas.size());
                 datas.addAll(newData);
                 return newData;
+            }
+
+            @Override
+            public void onInnerItemClick(int position) {
+                super.onInnerItemClick(position);
+                Toast.makeText(UIUtils.getContext(),"position:"+ position,Toast.LENGTH_SHORT).show();
+
+                AppInfo appInfo = datas.get(position);
+
+                Intent intent = new Intent(UIUtils.getContext(),DetailActivity.class);
+
+                intent.putExtra("packageName",appInfo.getPackageName());
+
+                startActivity(intent);
+
             }
         });
 
