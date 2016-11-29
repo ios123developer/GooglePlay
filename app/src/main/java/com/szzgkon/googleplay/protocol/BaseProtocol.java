@@ -75,7 +75,7 @@ public abstract class BaseProtocol<T> {
         try {
             File dir=FileUtils.getCacheDir();
             //在第一行写一个过期时间
-            File file = new File(dir, getKey()+"_" + index); // /mnt/sdcard/googlePlay/cache/home_0
+            File file = new File(dir, getKey()+"_" + index + getParams()); // /mnt/sdcard/googlePlay/cache/home_0
             FileWriter fw = new FileWriter(file);
             bw = new BufferedWriter(fw);
             bw.write(System.currentTimeMillis() + 1000 * 100 + "");
@@ -93,7 +93,7 @@ public abstract class BaseProtocol<T> {
     private String loadLocal(int index) {
         //  如果发现文件已经过期了 就不要再去复用缓存了
         File dir=FileUtils.getCacheDir();// 获取缓存所在的文件夹
-        File file = new File(dir, getKey()+"_" + index);
+        File file = new File(dir, getKey()+"_" + index + getParams());
         try {
             FileReader fr=new FileReader(file);
             BufferedReader br=new BufferedReader(fr);

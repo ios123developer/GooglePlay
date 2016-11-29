@@ -9,7 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 
 import com.szzgkon.googleplay.domain.AppInfo;
+import com.szzgkon.googleplay.holder.DetailBottomHolder;
+import com.szzgkon.googleplay.holder.DetailDesHolder;
 import com.szzgkon.googleplay.holder.DetailInfoHolder;
+import com.szzgkon.googleplay.holder.DetailSafeHolder;
+import com.szzgkon.googleplay.holder.DetailScreenHolder;
 import com.szzgkon.googleplay.protocol.DetailProtocol;
 import com.szzgkon.googleplay.tools.UIUtils;
 import com.szzgkon.googleplay.view.LoadingPage;
@@ -19,9 +23,13 @@ public class DetailActivity extends BaseActivity {
     private String packageName;
     private AppInfo data;
 
-    private FrameLayout bottom_layout,detail_info,detail_safe,detail_des;
+    private FrameLayout bottom_layout, detail_info, detail_safe, detail_des;
     private HorizontalScrollView detail_screen;
     private DetailInfoHolder detailInfoHolder;
+    private DetailScreenHolder screenHolder;
+    private DetailSafeHolder safeHolder;
+    private DetailDesHolder desHolder;
+    private DetailBottomHolder bottomHolder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class DetailActivity extends BaseActivity {
         init();
         initActionBar();
     }
+
     @Override
     public void initView() {
         LoadingPage loadingPage = new LoadingPage(this) {
@@ -55,6 +64,7 @@ public class DetailActivity extends BaseActivity {
 
     /**
      * 加载成功的界面
+     *
      * @return
      */
     private View createSuccessView() {
@@ -65,14 +75,26 @@ public class DetailActivity extends BaseActivity {
         detail_info = (FrameLayout) view.findViewById(R.id.detail_info);
         detailInfoHolder = new DetailInfoHolder();
         detailInfoHolder.setData(data);
-        View contentView = detailInfoHolder.getContentView();
-        detail_info.addView(contentView);
+        detail_info.addView(detailInfoHolder.getContentView());
 
-
+        //安全标记
         detail_safe = (FrameLayout) view.findViewById(R.id.detail_safe);
-        detail_des = (FrameLayout) view.findViewById(R.id.detail_des);
+        safeHolder = new DetailSafeHolder();
+        safeHolder.setData(data);
+        detail_safe.addView(safeHolder.getContentView());
 
+        //描述
+        detail_des = (FrameLayout) view.findViewById(R.id.detail_des);
+        desHolder = new DetailDesHolder();
+        desHolder.setData(data);
+        detail_des.addView(desHolder.getContentView());
+
+
+        //中间五张图片
         detail_screen = (HorizontalScrollView) view.findViewById(R.id.detail_screen);
+        screenHolder = new DetailScreenHolder();
+        screenHolder.setData(data);
+        detail_screen.addView(screenHolder.getContentView());
 
 
         return view;
@@ -80,6 +102,7 @@ public class DetailActivity extends BaseActivity {
 
     /**
      * 请求服务器加载数据
+     *
      * @return
      */
 
@@ -88,9 +111,9 @@ public class DetailActivity extends BaseActivity {
         DetailProtocol protocol = new DetailProtocol(packageName);
 
         data = protocol.load(0);
-        if(data == null){
-             return LoadingPage.LoadResult.error;
-        }else {
+        if (data == null) {
+            return LoadingPage.LoadResult.error;
+        } else {
             return LoadingPage.LoadResult.success;
         }
 
@@ -100,7 +123,6 @@ public class DetailActivity extends BaseActivity {
     public void init() {
 
     }
-
 
 
     @Override

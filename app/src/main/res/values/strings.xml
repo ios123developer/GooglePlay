@@ -17,6 +17,7 @@
     <string name="tv_updates">检查更新</string>
     <string name="tv_about">关于</string>
     <string name="tv_exit">退出</string>
+    <string name="app_detail_introduction">简介</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -28,14 +28,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/list_item_bg_normal" />
+                android:background="@drawable/list_item_bg_normal" >
+
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/detail_safe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/detail_info"
-                android:background="@drawable/list_item_bg_normal" />
+                android:background="@drawable/list_item_bg_normal" >
+
+            </FrameLayout>
 
             <HorizontalScrollView
                 android:id="@+id/detail_screen"
@@ -45,7 +49,9 @@
                 android:background="@color/detail_screen_bg"
                 android:fillViewport="true"
                 android:padding="5dp"
-                android:scrollbars="none" />
+                android:scrollbars="none" >
+
+            </HorizontalScrollView>
 
             <FrameLayout
                 android:id="@+id/detail_des"
@@ -54,7 +60,9 @@
                 android:layout_below="@+id/detail_screen"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/list_item_bg_normal" />
+                android:background="@drawable/list_item_bg_normal" >
+
+            </FrameLayout>
         </RelativeLayout>
     </ScrollView>
 
