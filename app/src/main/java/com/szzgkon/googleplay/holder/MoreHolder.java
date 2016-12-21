@@ -31,6 +31,9 @@ public class MoreHolder extends BaseHolder<Integer> {
   public static final int LOAD_ERR = 1;//加载失败
   public static final int HAS_MORE = 2;//有额外数据
 
+
+  private boolean hasMore;
+
   private RelativeLayout rl_more_loading,rl_more_error;
 
     /**
@@ -53,6 +56,7 @@ public class MoreHolder extends BaseHolder<Integer> {
     @Override
     public void refreshView(Integer data) {
 
+
      rl_more_error.setVisibility(data == LOAD_ERR?View.VISIBLE:View.GONE);
 
       rl_more_loading.setVisibility(data == HAS_MORE?View.VISIBLE:View.GONE);
@@ -74,8 +78,14 @@ public class MoreHolder extends BaseHolder<Integer> {
   }
 
   private DefaultAdapter adapter;
-  public MoreHolder(DefaultAdapter adapter) {
+  public MoreHolder(DefaultAdapter adapter, Boolean hasMore) {
     super();
     this.adapter = adapter;
+    this.hasMore =  hasMore;
+
+    if(!hasMore){
+        setData(0);
+    }
+
   }
 }

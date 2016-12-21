@@ -31,7 +31,21 @@ public abstract class BaseActivity extends AppCompatActivity {
     //在基类中可以管理所有的activity
   public final static   List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
 
+  public static BaseActivity activity;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        activity = this;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        activity = null;
+    }
 
     /**
      * LinkedList和ArrayList的区别
@@ -39,6 +53,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * ArrayList查询比较快
      *
      */
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {

@@ -83,7 +83,7 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
 
     }
 
-    private int getInnerItemViewType(int position) {
+    protected int getInnerItemViewType(int position) {
         return DEFAULT_ITEM;
     }
 
@@ -145,7 +145,7 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
                 }
                 break;
 
-            case DEFAULT_ITEM:
+            default:
                 if (convertView == null) {
                     holder = getHolder();
                 } else {
@@ -167,11 +167,19 @@ public abstract class DefaultAdapter<T> extends BaseAdapter implements AdapterVi
         if (holder != null) {
             return holder;
         } else {
-            holder = new MoreHolder(this);
+            holder = new MoreHolder(this,hasMore());
         }
 
-        return new MoreHolder(this);
+        return new MoreHolder(this, hasMore());
 
+    }
+
+    /**
+     * 是否有额外的数据
+     * @return
+     */
+    protected Boolean hasMore() {
+        return true;
     }
 
     protected abstract BaseHolder<T> getHolder();

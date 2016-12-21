@@ -1,11 +1,13 @@
 package com.szzgkon.googleplay.tools;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Process;
 import android.view.View;
 
+import com.szzgkon.googleplay.BaseActivity;
 import com.szzgkon.googleplay.BaseApplication;
 
 /**
@@ -102,6 +104,24 @@ public class UIUtils {
      */
     public static void cancel(Runnable run) {
         BaseApplication.getHandler().removeCallbacks(run);
+    }
+
+    /**
+     * 可以打开Activity
+     * @param intent
+     */
+    public static void startActivity(Intent intent) {
+        //如果不在activity里去打开activity，需要指定任务栈,需要设置标签
+
+        if(BaseActivity.activity == null){
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            getContext().startActivity(intent);
+        }else {
+            BaseActivity.activity.startActivity(intent);
+        }
+
+
     }
 }
 

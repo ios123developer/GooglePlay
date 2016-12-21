@@ -12,7 +12,7 @@
         android:layout_margin="6dp"
         android:background="@drawable/detail_btn"
         android:gravity="center"
-        android:textColor="#ffffff"
+        android:textColor="#808080"
         android:textSize="16dp" 
         android:text="收藏"
         />
@@ -25,7 +25,7 @@
         android:layout_margin="6dp"
         android:background="@drawable/detail_btn"
         android:gravity="center"
-        android:textColor="#ffffff"
+        android:textColor="#808080"
         android:textSize="16dp" 
          android:text="分享"/>
 

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.szzgkon.googleplay.R;
 import com.szzgkon.googleplay.adapter.DefaultAdapter;
@@ -61,12 +62,17 @@ public class SubjectFragment extends BaseFragment {
         protected List<SubjectInfo> onload() {
 
             SubjectProtocol protocol=new SubjectProtocol();
-            List<SubjectInfo> newData = protocol.load(0);
+            List<SubjectInfo> newData = protocol.load(datas.size());
            datas.addAll(newData);
             return newData;
         }
 
+        @Override
+        public void onInnerItemClick(int position) {
+            super.onInnerItemClick(position);
+            Toast.makeText(UIUtils.getContext(),datas.get(position).getDes(),Toast.LENGTH_SHORT).show();
 
+        }
     }
    static class SubjectHolder extends BaseHolder<SubjectInfo> {
         ImageView item_icon;

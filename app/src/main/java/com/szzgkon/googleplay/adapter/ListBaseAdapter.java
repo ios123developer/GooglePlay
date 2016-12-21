@@ -1,10 +1,14 @@
 package com.szzgkon.googleplay.adapter;
 
+import android.content.Intent;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.szzgkon.googleplay.DetailActivity;
 import com.szzgkon.googleplay.domain.AppInfo;
 import com.szzgkon.googleplay.holder.BaseHolder;
 import com.szzgkon.googleplay.holder.ListBaseHolder;
+import com.szzgkon.googleplay.tools.UIUtils;
 
 import java.util.List;
 
@@ -41,4 +45,21 @@ public abstract class ListBaseAdapter extends DefaultAdapter<AppInfo> {
 
     @Override
     protected abstract List<AppInfo> onload();
+
+    @Override
+    public void onInnerItemClick(int position) {
+        super.onInnerItemClick(position);
+        Toast.makeText(UIUtils.getContext(),"position:"+ position,Toast.LENGTH_SHORT).show();
+
+        AppInfo appInfo = datas.get(position);
+
+        Intent intent = new Intent(UIUtils.getContext(),DetailActivity.class);
+
+        intent.putExtra("packageName",appInfo.getPackageName());
+
+        UIUtils.startActivity(intent);
+
+    }
+
+
 }

@@ -69,8 +69,14 @@ public class DetailActivity extends BaseActivity {
      */
     private View createSuccessView() {
         View view = UIUtils.inflate(R.layout.activity_detail);
-
+         //添加信息区域
         bottom_layout = (FrameLayout) view.findViewById(R.id.bottom_layout);
+        bottomHolder = new DetailBottomHolder();
+        bottomHolder.setData(data);
+
+        bottom_layout.addView(bottomHolder.getContentView());
+
+
         //操作应用程序信息
         detail_info = (FrameLayout) view.findViewById(R.id.detail_info);
         detailInfoHolder = new DetailInfoHolder();
